@@ -1,0 +1,6 @@
+*.pyc
+dist/
+.tox
+build/
+docs/_build/
+.virtualenv/
