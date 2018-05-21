@@ -57,6 +57,7 @@ markdown_extensions:
   - admonition
   - markdown.extensions.codehilite:
       guess_lang: false
+      linenums: true
   - markdown.extensions.def_list
   - markdown.extensions.footnotes
   - markdown.extensions.meta
@@ -83,6 +84,7 @@ markdown_extensions:
 # Page tree
 pages:
   - Welcome: index.md
+  - Overview: overview.md
   - Getting started: getting-started.md
   - Contributing:
     - First step: contribution/contributing.md
@@ -91,6 +93,7 @@ pages:
   - About:
     - License: about/license.md
     - Release notes: about/notes.md
+    - Incoming Changes: about/next.md
 
 # Google Analytics
 google_analytics:

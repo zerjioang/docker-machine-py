@@ -1,5 +1,7 @@
 # Contributing
 
+![github](https://spin.atomicobject.com/wp-content/uploads/20171003153036/github-logo.png)
+
 To support this project you can:
 
   - Post thoughts about new features/optimizations that important to you
