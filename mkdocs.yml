@@ -1,0 +1,98 @@
+# Project information
+site_name: docker-machine-py
+site_description: docker-machine-py Documentation for Python 3.6
+site_author: Sergio Anguita
+site_url: https://github.com/zerjioang/docker-machine-py
+
+# Repository
+repo_name: zerjioang/docker-machine-py
+repo_url: https://github.com/zerjioang/docker-machine-py
+edit_uri: ""
+
+# Copyright
+copyright: 'Copyright &copy; 2018 Sergio Anguita'
+
+# https://squidfunk.github.io/mkdocs-material/getting-started/
+
+# Configuration
+theme:
+  name: 'material'
+
+  # 404 page
+  static_templates:
+    - 404.html
+
+  # Don't include MkDocs' JavaScript
+  include_search_page: true
+  search_index_only: false
+
+  # Default values, taken from mkdocs_theme.yml
+  language: en
+  feature:
+    tabs: true
+  palette:
+    primary: green
+    accent: green
+  font:
+    text: Roboto
+    code: Roboto Mono
+  favicon: assets/images/favicon.png
+  logo:
+    icon: "\uE80C"
+
+# Customization
+extra:
+  social:
+    - type: globe
+      link: https://github.com/zerjioang
+    - type: github-alt
+      link: https://github.com/zerjioang
+    #- type: twitter
+    #  link: https://twitter.com/squidfunk
+    #- type: linkedin
+    # link: https://linkedin.com/in/squidfunk
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Page tree
+pages:
+  - Welcome: index.md
+  - Getting started: getting-started.md
+  - Contributing:
+    - First step: contribution/contributing.md
+    - Guide: contribution/contributing-guide.md
+    - Code of conduct: contribution/conduct.md
+  - About:
+    - License: about/license.md
+    - Release notes: about/notes.md
+
+# Google Analytics
+google_analytics:
+  - !!python/object/apply:os.getenv ["GOOGLE_ANALYTICS_KEY"]
+  - auto
