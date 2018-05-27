@@ -328,6 +328,22 @@ class DockerMachine(LogObject):
             if self.status() == DockerMachine.STOPPED:
                 return self.start()
 
+    def create_amazon(self, config: EC2MachineConfig):
+        # docker-machine create --driver amazonec2 -h
+        cmd = ["create", "--driver", "amazonec2", config.asList()]
+        data = self.docker_machine_exec(cmd)
+        if data is not None:
+            return data
+        return None
+
+    def create_azure(self, config: AzureMachineConfig):
+        # docker-machine create --driver amazonec2 -h
+        cmd = ["create", "--driver", "amazonec2", config.asList()]
+        data = self.docker_machine_exec(cmd)
+        if data is not None:
+            return data
+        return None
+
     def exists(self, name=DEFAULT_MACHINE_NAME) -> bool:
         if self.is_valid_machine_name(name):
             try:
