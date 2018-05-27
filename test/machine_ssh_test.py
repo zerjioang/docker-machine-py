@@ -17,45 +17,32 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
 
-from machine import get_machine, manager, DockerMachine
+from machine import get_machine, manager
 from machine.error import MachineError, MachineNoExistError
 
 
-class TestMachineStatus(unittest.TestCase):
+class TestMachineSsh(unittest.TestCase):
 
-    def test_machine_status_running_success(self):
-
+    def test_machine_ssh_success(self):
         try:
             manager.create_default(autostart=True)
-            result = manager.status()
+            result = manager.ssh()
             self.assertTrue(result is not None)
-            self.assertTrue(len(result) >= 1)
-            print("Default machine status is: "+result)
-            self.assertTrue(result == DockerMachine.RUNNING)
+            self.assertTrue(len(result) > 0)
+            self.assertTrue(False)
         except MachineError as e:
             self.assertTrue(e is None)
 
-    def test_machine_status_stop_success(self):
-
+    def test_machine_ssh_command_success(self):
         try:
+            # run uname command on remote machine
+            result = manager.ssh(command="uname -ra")
             manager.create_default(autostart=True)
-            manager.stop()
-            result = manager.status()
             self.assertTrue(result is not None)
-            self.assertTrue(len(result) >= 1)
-            print("Default machine status is: "+result)
-            self.assertTrue(result == DockerMachine.STOPPED)
+            self.assertTrue(len(result) > 0)
+            self.assertTrue(False)
         except MachineError as e:
             self.assertTrue(e is None)
-
-    def test_machine_status_fail(self):
-        try:
-            result = manager.status("fake_machine")
-            self.assertTrue(result is not None)
-            self.assertTrue(len(result) >= 1)
-        except MachineError as e:
-            print("Successfully controlled status request on non existent machine")
-            self.assertTrue(type(e) is MachineNoExistError)
 
 
 if __name__ == '__main__':

@@ -56,3 +56,15 @@ class MachineAlreadyStoppedError(MachineError):
 
     def __init__(self, message: list):
         self.message = message
+
+
+class MachineNoActiveHostError(MachineError):
+
+    def __init__(self, message: list):
+        self.message = message
+
+class MachineInvalidCertsError(MachineError):
+
+    def __init__(self, message: list):
+        self.message = message
+

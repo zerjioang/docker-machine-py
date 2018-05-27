@@ -55,20 +55,24 @@ def execute_command(executable: str, commands: list) -> list:
         apt install virtualbox
         '''
         error = parse_result(stderr)
-        if len(error) == 1:
-            msg = error[0]
+        if len(error) >= 1:
+            msg = ''.join(error)
             if msg == "Host is not running":
-                raise MachineStoppedError(msg)
+                raise MachineStoppedError(error)
             elif msg.startswith('Docker machine "') and msg.endswith('to add a new one.'):
-                raise MachineNoExistError(msg)
+                raise MachineNoExistError(error)
             elif msg.startswith('Docker machine "') and msg.endswith('" already exists'):
-                raise MachineAlreadyExistError(msg)
+                raise MachineAlreadyExistError(error)
             elif msg.endswith('" is already running.'):
-                raise MachineAlreadyRunningError(msg)
+                raise MachineAlreadyRunningError(error)
             elif msg.endswith('" is already stopped.'):
-                raise MachineAlreadyStoppedError(msg)
+                raise MachineAlreadyStoppedError(error)
+            elif msg == "No active host found":
+                raise MachineNoActiveHostError(error)
+            elif msg.find("You can attempt to regenerate them using 'docker-machine regenerate-certs ") != -1:
+                raise MachineInvalidCertsError(error)
             else:
-                raise MachineError(msg)
+                raise MachineError(error)
         else:
             raise MachineError(error)
 

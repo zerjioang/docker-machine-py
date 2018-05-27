@@ -18,12 +18,15 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 
 from machine import get_machine, manager
-from machine.error import MachineError, MachineNoExistError
+from machine.error import MachineError, MachineNoExistError, MachineNoActiveHostError
 
 
 class TestMachineActive(unittest.TestCase):
 
-    def test_machine_active_success(self):
+    '''
+    a machine is considered active if the DOCKER_HOST environment variable points to it
+    '''
+    def test_machine_no_active_success(self):
 
         try:
             manager.create_default(autostart=True)
@@ -32,7 +35,18 @@ class TestMachineActive(unittest.TestCase):
             self.assertTrue(len(result) >= 1)
             print("Docker machine active list: "+result)
         except MachineError as e:
-            self.assertTrue(e is None)
+            self.assertTrue(type(e) is MachineNoActiveHostError)
+
+    def test_machine_active_with_timeout_success(self):
+
+        try:
+            manager.create_default(autostart=True)
+            result = manager.active(20)
+            self.assertTrue(result is not None)
+            self.assertTrue(len(result) >= 1)
+            print("Docker machine active list: "+result)
+        except MachineError as e:
+            self.assertTrue(type(e) is MachineNoActiveHostError)
 
 
 if __name__ == '__main__':

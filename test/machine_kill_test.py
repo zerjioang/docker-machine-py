@@ -17,44 +17,58 @@ along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 import unittest
 
-from machine import get_machine, manager, DockerMachine
-from machine.error import MachineError, MachineNoExistError
+from machine import manager
+from machine.error import MachineError, MachineNoExistError, MachineAlreadyRunningError, MachineAlreadyStoppedError
 
 
-class TestMachineStatus(unittest.TestCase):
+class TestMachinekill(unittest.TestCase):
 
-    def test_machine_status_running_success(self):
+    def test_machine_kill_success(self):
+        manager.create_default(autostart=True)
+        result = manager.kill()
+        self.assertTrue(result is not None)
+        self.assertTrue(len(result) >= 1)
 
+    def test_machine_kill_twice_success(self):
+        """
+        Test that tries to kill the same machine twice
+        :return:
+        """
         try:
             manager.create_default(autostart=True)
-            result = manager.status()
+            manager.kill()
+            result = manager.kill()
             self.assertTrue(result is not None)
             self.assertTrue(len(result) >= 1)
-            print("Default machine status is: "+result)
-            self.assertTrue(result == DockerMachine.RUNNING)
         except MachineError as e:
-            self.assertTrue(e is None)
+            self.assertTrue(type(e) is MachineAlreadyStoppedError)
 
-    def test_machine_status_stop_success(self):
-
+    def test_machine_kill_stopped_success(self):
+        """
+        Test that tries to kill an stopped machine
+        :return:
+        """
         try:
             manager.create_default(autostart=True)
             manager.stop()
-            result = manager.status()
+            result = manager.kill()
             self.assertTrue(result is not None)
             self.assertTrue(len(result) >= 1)
-            print("Default machine status is: "+result)
-            self.assertTrue(result == DockerMachine.STOPPED)
         except MachineError as e:
-            self.assertTrue(e is None)
+            self.assertTrue(type(e) is MachineAlreadyStoppedError)
 
-    def test_machine_status_fail(self):
+
+    def test_machine_kill_fail(self):
+        """
+        Test that tries to kill a non existent machine
+        :return:
+        """
         try:
-            result = manager.status("fake_machine")
+            result = manager.kill("fake_machine")
             self.assertTrue(result is not None)
             self.assertTrue(len(result) >= 1)
         except MachineError as e:
-            print("Successfully controlled status request on non existent machine")
+            print("Successfully controlled kill request on non existent machine")
             self.assertTrue(type(e) is MachineNoExistError)
 
 

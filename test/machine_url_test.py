@@ -33,18 +33,19 @@ class TestMachineUrl(unittest.TestCase):
 
     def test_machine_url_fail_machine_stopped(self):
         try:
+            manager.create_default(autostart=True)
             manager.stop()
             url = manager.get_url()
             self.assertTrue(len(url) > 0)
         except MachineError as m:
-            self.assertTrue(type(m) is MachineAlreadyStoppedError)
+            self.assertTrue(type(m) is MachineAlreadyStoppedError or type(m) is MachineStoppedError)
 
     def test_machine_url_success(self):
         try:
             manager.create_default(autostart=True)
             url = manager.get_url()
             print("Machine url is : "+url)
-            self.assertTrue(len(url) > 0)
+            self.assertTrue(len(url) > 0 and url.startswith("tcp://"))
         except MachineError as m:
             self.assertTrue(m is not None)
 
