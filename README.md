@@ -1,7 +1,7 @@
 # docker-machine-py
 
 <p align="center">
-  <img src="https://camo.githubusercontent.com/439d0ad6ea1a65694cfc66c537b6b22e1ae1fd01/68747470733a2f2f646f63732e646f636b65722e636f6d2f6d616368696e652f696d672f6c6f676f2e706e67"/>
+  <img width="200px" src="https://cyliconvalley.es/assets/2016/03/docker.png"/>
 </p>
 
 A **simple** but **powerful** docker-machine wrapper for **Python 3.6**
